@@ -1,0 +1,22 @@
+{
+    "preferences": [
+        {
+            "name": "Experience",
+            "matching_type": "homogeneous",
+            "weight": 0.6,
+            "value_type": "numerical",
+            "min_value": 1,
+            "max_value": 10
+        },
+        {
+            "name": "Team-Role",
+            "matching_type": "heterogeneous",
+            "weight": 0.4,
+            "value_type": "categorical",
+            "categories": ["Analyst", "Developer", "Designer"]
+        }
+    ],
+    "group_size": 3,
+    "linkage_method": "UPGMA",
+    "repair_strategy": "merge"
+}
