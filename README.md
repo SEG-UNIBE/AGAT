@@ -1,3 +1,9 @@
+[![Changelog](https://img.shields.io/github/v/release/SEG-UNIBE/AGAT?include_prereleases&label=changelog)](https://github.com/SEG-UNIBE/AGAT/releases)
+[![License](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://github.com/SEG-UNIBE/AGAT/blob/main/LICENSE)
+[![DOI](https://zenodo.org/badge/1040001167.svg)](https://doi.org/10.5281/zenodo.16925342)
+
+
+
 # AGAT: Automated Group Assembly Tool
 
 Dieses Repository enthält den Quellcode und die Evaluationsdateien für die Bachelorarbeit "AGAT: Ein heuristischer Algorithmus zur präferenzbasierten Gruppenbildung mit fester Gruppengrösse" von Patrick Rüegsegger.
