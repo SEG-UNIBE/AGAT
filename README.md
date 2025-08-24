@@ -1,12 +1,16 @@
+[![Changelog](https://img.shields.io/github/v/release/SEG-UNIBE/AGAT?include_prereleases&label=changelog)](https://github.com/SEG-UNIBE/AGAT/releases)
+[![License](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://github.com/SEG-UNIBE/AGAT/blob/main/LICENSE)
+[![DOI](https://zenodo.org/badge/1040001167.svg)](https://doi.org/10.5281/zenodo.16925342)
+
+
+
 # AGAT: Automated Group Assembly Tool
 
 Dieses Repository enthält den Quellcode und die Evaluationsdateien für die Bachelorarbeit "AGAT: Ein heuristischer Algorithmus zur präferenzbasierten Gruppenbildung mit fester Gruppengrösse" von Patrick Rüegsegger.
 
 ## Worum geht es?
 
-Dieses Projekt befasst sich mit dem Problem der automatisierten, präferenzbasierten Gruppenbildung mit einer fest vordefinierten Gruppengrösse. Diese Aufgabenstellung ist als NP-schweres Partitionierungsproblem formuliert, was eine exakte Lösung für grössere Benutzerzahlen unpraktikabel macht.
-
-Der hier präsentierte AGAT-Algorithmus ist ein heuristischer Lösungsansatz, der agglomeratives hierarchisches Clustering (AHC) für eine initiale Cluster-Bildung nutzt. Da AHC allein keine festen Gruppengrössen garantiert, wird der Algorithmus durch zwei neu entwickelte Reparaturmethoden ("merge" und "break") ergänzt, um diese strikte Anforderung zu erfüllen. Ein flexibles Präferenzmodell erlaubt dabei die Optimierung sowohl auf Ähnlichkeit (homogene Kriterien) als auch auf Unterschiedlichkeit (heterogene Kriterien) der Gruppenmitglieder.
+Der hier präsentierte AGAT-Algorithmus ist ein heuristischer Lösungsansatz, der agglomeratives hierarchisches Clustering (AHC) für eine initiale Cluster-Bildung nutzt. Da AHC allein keine festen Gruppengrössen garantiert, wird der Algorithmus durch zwei neu entwickelte Reparaturmethoden ("merge" und "break") ergänzt, um diese strikte Anforderung zu erfüllen. Ein Präferenzmodell erlaubt dabei die Abgleichung sowohl auf Ähnlichkeit (homogene Kriterien) als auch auf Unterschiedlichkeit (heterogene Kriterien) der Gruppenmitglieder.
 
 
 ## Installation
@@ -25,7 +29,7 @@ Der hier präsentierte AGAT-Algorithmus ist ein heuristischer Lösungsansatz, de
 ## Anwendung
 
 ### Prototyp ausführen
-Zur eigener Gruppenbildung können Sie den AGAT-Prototyp mit der grafischen Benutzeroberfläche zu starten, indem Sie die `main.py` ausführen:
+Zur eigener Gruppenbildung können Sie den AGAT-Prototyp mit der grafischen Benutzeroberfläche starten, indem Sie die `main.py` ausführen:
 ```
 python src/main.py
 ```
@@ -38,7 +42,7 @@ Nachdem Sie die Gruppenbildung ausgeführt haben, können Sie das Resultat als `
 
 Das Skript `evaluation.py` führt die komplette Evaluation durch, wie sie in der Thesis beschrieben ist.
 
-**Achtung:** Die vollständige Ausführung des Skripts dauert mehrere Stunden bis zu wenigen Tagen (je nach Rechenleistung).
+**Achtung:** Die vollständige Ausführung des Skripts dauert mehrere Stunden oder sogar wenigen Tagen (je nach Rechenleistung).
 ```
 python evaluation/evaluations.py
 ```
