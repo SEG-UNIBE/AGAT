@@ -65,7 +65,7 @@ class AGAT:
             "    ],\n"
             '    "group_size": 3,\n'
             '    "linkage_method": "UPGMA",\n'
-            '    "repair_strategy": "merge"\n'
+            '    "repair_method": "merge"\n'
             "}\n\n\n"
             "USERS FILE (CSV):\n"
             "user_id, user_name, Experience, Team-Role\n"
@@ -79,7 +79,7 @@ class AGAT:
             "  - matching_type: ['heterogeneous', 'homogeneous']\n"
             "  - value_type: ['numerical', 'categorical']\n"
             "  - linkage_method: ['single', 'complete', 'UPGMA', 'WPGMA', 'total']\n"
-            "  - repair_strategy: ['merge', 'break']\n"
+            "  - repair_method: ['merge', 'break']\n"
         )
         messagebox.showinfo("Input Examples", example_text)
 
@@ -117,8 +117,8 @@ class AGAT:
             pool = create_pool_from_files(self.config_path, self.users_path)
             
             # Step 2: Generate the grouping
-            group_size, linkage_method, repair_strategy = get_algorithm_params(self.config_path)
-            grouping = generate_grouping(pool, group_size, linkage_method, repair_strategy)
+            group_size, linkage_method, repair_method = get_algorithm_params(self.config_path)
+            grouping = generate_grouping(pool, group_size, linkage_method, repair_method)
 
             # Step 3: Save the output
             output_file = filedialog.asksaveasfilename(

@@ -13,12 +13,12 @@ def get_algorithm_params(config_path: str) -> Tuple[int, str, str]:
         config_path (str): The path to the config
 
     Returns:
-        Tuple[int, str, str]: The group size, linkage method, and repair strategy.
+        Tuple[int, str, str]: The group size, linkage method, and repair method.
     """
     with open(config_path, "r") as f:
         config = json.load(f)
 
-    return config["group_size"], config["linkage_method"], config["repair_strategy"]
+    return config["group_size"], config["linkage_method"], config["repair_method"]
 
 
 def create_pool_from_files(config_path: str, users_path: str) -> Pool:

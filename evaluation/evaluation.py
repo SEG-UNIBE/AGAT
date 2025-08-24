@@ -19,7 +19,7 @@ def generate_csv():
     - pool_size
     - group_size
     - type (one of the 5 linkage types or ground_truth, random_best, random_median)
-    - repair_strategy (merge or break)
+    - repair_method (merge or break)
     - rank (when considering a specific ranking of groupings, where does this one rank?)
     - ranking_size (how many groupings was this one compared to?)
     - total_users_repaired
@@ -35,7 +35,7 @@ def generate_csv():
     - group_distances (list of all group distances in the grouping)
     - generated_grouping
     """
-    df = pd.DataFrame(columns=["pool_size", "group_size", "type", "repair_strategy", 
+    df = pd.DataFrame(columns=["pool_size", "group_size", "type", "repair_methode", 
                                "rank", "ranking_size", "total_users_repaired", "total_distance", 
                                "best_group_distance", "median_group_distance", "worst_group_distance",
                                 "time_matrix", "time_initial", "time_repair", "time_total", "seed",
@@ -44,7 +44,7 @@ def generate_csv():
     pool_sizes = [4, 6, 8, 10, 12, 16, 20, 24, 32, 50, 64, 100, 200, 500]
     seeds = [i for i in range(1, 11)]
     linkage_methods = ["single", "complete", "UPGMA", "WPGMA", "total"]
-    repair_strategies = ["merge", "break"]
+    repair_methods = ["merge", "break"]
 
     # Iterate through all seeds
     for seed in seeds:
@@ -88,8 +88,8 @@ def generate_csv():
 
                 # Calculate groupings with all 10 AGAT-Variants
                 for linkage_method in linkage_methods:
-                    for repair_strategy in repair_strategies:
-                        add_grouping_to_df(df, pool, group_size, ranking, linkage_method, repair_strategy, 
+                    for repair_method in repair_methods:
+                        add_grouping_to_df(df, pool, group_size, ranking, linkage_method, repair_method, 
                                            time_matrix, seed)
 
         # Save DF after every seed-iteration                
@@ -98,9 +98,9 @@ def generate_csv():
 
 
 def add_grouping_to_df(df: pd.DataFrame, pool: Pool, group_size: int, ranking: List[Tuple[List[List[User]], float]],
-                          linkage_method: str, repair_strategy: str, time_matrix, seed: int):
+                          linkage_method: str, repair_method: str, time_matrix, seed: int):
     
-    grouping, time_initial, time_repair, users_repaired = generate_grouping_for_eval(pool, group_size, linkage_method, repair_strategy)
+    grouping, time_initial, time_repair, users_repaired = generate_grouping_for_eval(pool, group_size, linkage_method, repair_method)
     time_total = time_matrix + time_initial + time_repair
     total_distance, best_group_distance, median_group_distance, worst_group_distance = get_distances(pool, grouping)
     
@@ -108,7 +108,7 @@ def add_grouping_to_df(df: pd.DataFrame, pool: Pool, group_size: int, ranking: L
         "pool_size": len(pool.users),
         "group_size": group_size,
         "type": linkage_method,
-        "repair_strategy": repair_strategy,
+        "repair_method": repair_method,
         "generated_grouping": grouping,
         "group_distances": sorted([float(calculate_group_distance(group, pool)) for group in grouping]),
         "total_distance": total_distance,
@@ -136,7 +136,7 @@ def add_best_grouping_to_df(df: pd.DataFrame, pool: Pool, group_size: int, ranki
         "pool_size": len(pool.users),
         "group_size": group_size,
         "type": "ground_truth" if len(pool.users) <= 16 else "random_best",
-        "repair_strategy": None,
+        "repair_method": None,
         "generated_grouping": best_grouping,
         "group_distances": sorted([float(calculate_group_distance(group, pool)) for group in best_grouping]),
         "total_distance": total_distance,
@@ -170,7 +170,7 @@ def add_random_median_grouping_to_df(df: pd.DataFrame, pool: Pool, group_size: i
             "pool_size": len(pool.users),
             "group_size": group_size,
             "type": "random_median",
-            "repair_strategy": None,
+            "repair_method": None,
             "generated_grouping": median_grouping,
             "group_distances": sorted([float(calculate_group_distance(group, pool)) for group in median_grouping]),
             "total_distance": total_distance,

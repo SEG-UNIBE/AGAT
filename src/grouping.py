@@ -9,7 +9,7 @@ distance_cache: Dict[Tuple[Tuple[int, ...], Tuple[int, ...]], float] = {}
 
 ### PUBLIC METHODS
 
-def generate_grouping(pool: Pool, group_size: int, linkage_method: str, repair_strategy: str) -> List[List[User]]:
+def generate_grouping(pool: Pool, group_size: int, linkage_method: str, repair_method: str) -> List[List[User]]:
     """
     Creates groups of the specified size from a pool of users. Matches users based on their attributes
     and the given preferences.
@@ -27,7 +27,7 @@ def generate_grouping(pool: Pool, group_size: int, linkage_method: str, repair_s
             - "WPGMA": Weighted Pair Group Method with Arithmetic Mean.
             - "total": Linkage based on using the sum of distances between all pairs of objects in the two clusters.
 
-        repair_strategy (str): Strategy for repairing groups.
+        repair_method (str): Method for repairing groups.
             - "merge": Merge two small groups to one that's too big, then redistribute users from the 
                 merged group to smaller groups.
             - "break": Break up the worst group completely and redistribute its users to smaller groups.
@@ -41,8 +41,8 @@ def generate_grouping(pool: Pool, group_size: int, linkage_method: str, repair_s
     if linkage_method not in ["single", "complete", "UPGMA", "WPGMA", "total"]:
         raise ValueError("Invalid linkage method. Available methods: 'single', 'complete', 'UPGMA', 'WPGMA', 'total'")
     
-    if repair_strategy not in ["merge", "break"]:
-        raise ValueError("Invalid repair strategy. Available methods: 'merge', 'break'")
+    if repair_method not in ["merge", "break"]:
+        raise ValueError("Invalid repair method. Available methods: 'merge', 'break'")
 
     # Resets Cache
     global distance_cache
@@ -56,7 +56,7 @@ def generate_grouping(pool: Pool, group_size: int, linkage_method: str, repair_s
 
     # Create grouping with initial phase and repair phase
     initial_grouping = _generate_initial_grouping(pool, group_size, linkage_method)
-    repaired_grouping = _repair_grouping(pool, initial_grouping, group_size, linkage_method, repair_strategy)
+    repaired_grouping = _repair_grouping(pool, initial_grouping, group_size, linkage_method, repair_method)
 
     # Remove dummy users from final grouping and remove them from the pool
     final_grouping = [[user for user in group if not isinstance(user, DummyUser)] for group in repaired_grouping]
@@ -67,7 +67,7 @@ def generate_grouping(pool: Pool, group_size: int, linkage_method: str, repair_s
     return final_grouping
 
 
-def generate_grouping_for_eval(pool: Pool, group_size: int, linkage_method: str, repair_strategy: str) -> Tuple[List[List[User]], float, float, int]:
+def generate_grouping_for_eval(pool: Pool, group_size: int, linkage_method: str, repair_method: str) -> Tuple[List[List[User]], float, float, int]:
     """
     Like 'generate_grouping' but measures and returns the time needed for the initial phase
     and repair phase additionally, as well as the number of users repaired.
@@ -84,8 +84,8 @@ def generate_grouping_for_eval(pool: Pool, group_size: int, linkage_method: str,
     if linkage_method not in ["single", "complete", "UPGMA", "WPGMA", "total"]:
         raise ValueError("Invalid linkage method. Available methods: 'single', 'complete', 'UPGMA', 'WPGMA', 'total'")
     
-    if repair_strategy not in ["merge", "break"]:
-        raise ValueError("Invalid repair strategy. Available methods: 'merge', 'break'")
+    if repair_method not in ["merge", "break"]:
+        raise ValueError("Invalid repair method. Available methods: 'merge', 'break'")
 
     global distance_cache
     distance_cache = {}
@@ -101,7 +101,7 @@ def generate_grouping_for_eval(pool: Pool, group_size: int, linkage_method: str,
     time_initial = time.perf_counter() - time_start
 
     users_repaired = sum(len(group) for group in initial_grouping if len(group) < group_size)
-    repaired_grouping = _repair_grouping(pool, initial_grouping, group_size, linkage_method, repair_strategy)
+    repaired_grouping = _repair_grouping(pool, initial_grouping, group_size, linkage_method, repair_method)
     time_repair = time.perf_counter() - time_initial - time_start
 
     # Remove dummy users from final grouping and remove them from the pool
@@ -209,7 +209,7 @@ def _generate_initial_grouping(pool: Pool, group_size: int, linkage_method: str)
 
 
 def _repair_grouping(pool: Pool, initial_grouping: List[List[User]], group_size: int, linkage_method: str, 
-                    repair_strategy: str) -> List[List[User]]:
+                    repair_method: str) -> List[List[User]]:
     """
     Repairs the initial grouping to ensure all groups are of the target size.
     Only transforms the incomplete groups (= of size < group_size)
@@ -219,7 +219,7 @@ def _repair_grouping(pool: Pool, initial_grouping: List[List[User]], group_size:
         initial_grouping (List[List[User]]): Initial grouping with clusters of the target size or smaller.
         group_size (int): Desired group size.
         linkage_method (str): Linkage method for merging clusters.
-        repair_strategy (str): Strategy for repairing groups.
+        repair_method (str): Method for repairing groups.
             - "merge": Merge two small groups to one that's too big, then redistribute users from the merged group 
                 to smaller groups.
             - "break": Break up the worst group completely and redistribute its users to smaller groups.
@@ -227,7 +227,7 @@ def _repair_grouping(pool: Pool, initial_grouping: List[List[User]], group_size:
     Returns:
         List[List[User]]: Repaired grouping with all groups of the target size.
     """
-    if repair_strategy == "merge":
+    if repair_method == "merge":
         return _repair_grouping_merge(pool, initial_grouping, group_size, linkage_method)
     else:
         return _repair_grouping_break(pool, initial_grouping, group_size, linkage_method)

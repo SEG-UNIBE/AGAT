@@ -6,7 +6,7 @@ Dieses Repository enthält den Quellcode und die Evaluationsdateien für die Bac
 
 Dieses Projekt befasst sich mit dem Problem der automatisierten, präferenzbasierten Gruppenbildung mit einer fest vordefinierten Gruppengrösse. Diese Aufgabenstellung ist als NP-schweres Partitionierungsproblem formuliert, was eine exakte Lösung für grössere Benutzerzahlen unpraktikabel macht.
 
-Der hier präsentierte AGAT-Algorithmus ist ein heuristischer Lösungsansatz, der agglomeratives hierarchisches Clustering (AHC) für eine initiale Cluster-Bildung nutzt. Da AHC allein keine festen Gruppengrössen garantiert, wird der Algorithmus durch zwei neu entwickelte Reparaturstrategien ("merge" und "break") ergänzt, um diese strikte Anforderung zu erfüllen. Ein flexibles Präferenzmodell erlaubt dabei die Optimierung sowohl auf Ähnlichkeit (homogene Kriterien) als auch auf Unterschiedlichkeit (heterogene Kriterien) der Gruppenmitglieder.
+Der hier präsentierte AGAT-Algorithmus ist ein heuristischer Lösungsansatz, der agglomeratives hierarchisches Clustering (AHC) für eine initiale Cluster-Bildung nutzt. Da AHC allein keine festen Gruppengrössen garantiert, wird der Algorithmus durch zwei neu entwickelte Reparaturmethoden ("merge" und "break") ergänzt, um diese strikte Anforderung zu erfüllen. Ein flexibles Präferenzmodell erlaubt dabei die Optimierung sowohl auf Ähnlichkeit (homogene Kriterien) als auch auf Unterschiedlichkeit (heterogene Kriterien) der Gruppenmitglieder.
 
 
 ## Installation

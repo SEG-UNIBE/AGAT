@@ -18,5 +18,5 @@
     ],
     "group_size": 3,
     "linkage_method": "UPGMA",
-    "repair_strategy": "merge"
+    "repair_method": "merge"
 }
